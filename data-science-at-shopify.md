@@ -13,10 +13,6 @@ note: example speakr notes!
 <hr>
 Today's slides 👉 <a href='https://ianwhitestone.work/slides-v2/data-science-at-shopify.html'>ianwhitestone.work/talks</a>
 
----
-
-## part 1: what the heck is data science?
-
 
 #### Data Science?
 
@@ -44,4 +40,75 @@ note: xxx
 
 ### How to add value with data?
 
-<img src="imgs/data-at-shopify/3.png" height="400px">
+<img src="imgs/data-at-shopify/1.png">
+
+
+### How to add value with data?
+
+<img src="imgs/data-at-shopify/2.png">
+
+
+### How to add value with data?
+
+<img src="imgs/data-at-shopify/3.png">
+
+
+### Roles in data
+
+<img src="imgs/data-at-shopify/4.png" height="500px">
+
+
+### Data @ Shopify
+
+<img src="imgs/data-at-shopify/5.png" height="500px">
+
+
+### Data Foundations
+
+<img src="imgs/data-at-shopify/6.png" height="500px">
+
+
+### Analytics
+
+* Conduct research to inform how products are built
+* Set metrics, KPIs & targets
+* Monitor product performance
+* Perform deep dives to understand user behaviour
+* Investigate anomalies
+
+<img src="imgs/data-at-shopify/7.png" height="300px">
+
+
+### Inference
+
+* Does this new website design perform better than the original version? (A/B testing)
+* What was the impact of product X on retention rates? (causal inference)
+
+<img src="imgs/data-at-shopify/8.png" height="350px">
+
+
+<section>
+  <!-- <li class="smaller_text">But I'm not!</li> -->
+  <h3>Data Products</h3>
+  <h4>(external customer facing)</h4>
+
+  <li class="smaller_text">How likely is this transaction to be fraudulent?</li>
+  <li class="smaller_text">Should we offer $10,000 in funding to business X? What is the likelihood they will be able to pay it back?</li>
+  <li class="smaller_text">What new countries should a business expand to, based on their historical data and what similar businesses have done?</li>
+  <li class="smaller_text">Basic analytics & business performance monitoring for merchants (no machine learning required!)</li>
+
+  <img src="imgs/data-at-shopify/9.png" height="250px">
+</section>
+
+
+### Data Products
+#### (internal customer facing)
+
+* Forecasting & anomaly detection
+* Customer upgrade scoring
+* Customer churn prediction
+
+<img src="imgs/data-at-shopify/10.png" height="300px">
+
+
+# Questions?
