@@ -45,6 +45,19 @@ note: example speakr notes!
 ### Agenda (cont'd)
 
 <ul style="display: list-item">
+  <li>Spark join strategies
+    <ul>
+      <li>Broadcasting</li>
+      <li>Salting</li>
+      <li>Partial broadcast join</li>
+    </ul>
+  </li>
+</ul>
+
+
+### Agenda (cont'd)
+
+<ul style="display: list-item">
   <li>Spark in the wild
     <ul>
       <li>Stack traces & broadcast timeouts</li>
@@ -335,10 +348,121 @@ note: example speakr notes!
 <img class="stretch" src="imgs/in-the-trenches-with-spark/spark-web-ui-0.png">
 
 
-<img class="stretch" src="imgs/in-the-trenches-with-spark/skewed-join-1.png">
+## Sample Data
+
+Transactions
+
+<table style="font-size:50%; margin-left: 5%; margin-right: 5%">
+<thead>
+  <tr>
+    <th>transaction_id</th>
+    <th>shop_id</th>
+    <th>created_at</th>
+    <th>currency_code</th>
+    <th>amount</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>1</td>
+    <td>123</td>
+    <td>2021-01-01 12:55:01</td>
+    <td>USD</td>
+    <td>25.99</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>123</td>
+    <td>2021-01-01 17:22:05</td>
+    <td>USD</td>
+    <td>13.45</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>456</td>
+    <td>2021-01-01 19:04:59</td>
+    <td>CAD</td>
+    <td>10.22</td>
+  </tr>
+</tbody>
+</table>
+
+Shop Dimension
+
+<table style="font-size:50%; margin-left: 5%; margin-right: 5%">
+<thead>
+  <tr>
+    <th>shop_id</th>
+    <th>shop_country_name</th>
+    <th>shop_country_code</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>123</td>
+    <td>Canada</td>
+    <td>CA</td>
+  </tr>
+  <tr>
+    <td>456</td>
+    <td>United States</td>
+    <td>US</td>
+  </tr>
+</tbody>
+</table>
 
 
-<img class="stretch" src="imgs/in-the-trenches-with-spark/skewed-join-1.png">
+## Simulating skewness
+
+<pre> 
+  <code class="language-python"> 
+  x = np.round(1 + np.random.chisquare(0.35, size=10000)*100000)
+  plt.hist(x, bins=100);
+  </code>
+</pre>
+
+<img class="stretch" src="imgs/in-the-trenches-with-spark/example-trxns-skew.png" >
 
 
-<img class="stretch" src="imgs/in-the-trenches-with-spark/skewed-join-1-w-sql.png">
+<pre> 
+  <code class="language-bash"> 
+  >>> pd.Series(x).describe()
+  count    1.000000e+04
+  mean     3.370065e+04
+  std      8.156347e+04
+  min      1.000000e+00
+  25%      4.600000e+01
+  50%      2.676000e+03
+  75%      2.833600e+04
+  max      1.702097e+06
+
+  >>> 100.0*x[x == 1].shape[0] / x.shape[0] 
+  11.19
+  </code>
+</pre>
+
+
+<pre class="stretch"> 
+  <code class="language-python stretch"> 
+  N = 6500000 # 6.5 million rows
+
+  currencies = ['USD', 'CAD', 'EUR', 'GBP', 'DKK', 'HKD']
+  currency_probas = [0.8, 0.02, 0.1, 0.05, 0.015, 0.015]
+
+  df = pd.DataFrame({
+    'transaction_id': np.arange(1, N + 1),
+    'shop_id': np.round(
+      1 + np.random.chisquare(0.35, size=N)*100000
+    ),
+    '_days_since_base': np.random.randint(0, 10, size=N),
+    'currency_code': np.random.choice(
+      currencies, size=N, p=currency_probas
+    ),
+    'amount': np.random.exponential(50, size=N)
+  })
+
+  df['base_date'] = datetime(2016, 1, 1)
+  days = pd.TimedeltaIndex(df['_days_since_base'], unit='D')
+  df['created_at_date'] = df.base_date + days
+  </code>
+</pre>
