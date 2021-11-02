@@ -186,7 +186,7 @@ note: example speakr notes!
   <li><b>Tasks</b> run in parallel on <b>"executors"</b></li>
 </ul>
 
---- 
+---
 
 ## Example 1
 ### Aggregating Transactions by App
@@ -416,8 +416,10 @@ Shop Dimension
 
 <pre> 
   <code class="language-python"> 
-  x = np.round(1 + np.random.chisquare(0.35, size=10000)*100000)
-  plt.hist(x, bins=100);
+  ids = np.round(
+    1 + np.random.chisquare(0.35, size=10000)*100000
+  )
+  plt.hist(ids, bins=100);
   </code>
 </pre>
 
@@ -426,7 +428,7 @@ Shop Dimension
 
 <pre> 
   <code class="language-bash"> 
-  >>> pd.Series(x).describe()
+  >>> pd.Series(ids).describe()
   count    1.000000e+04
   mean     3.370065e+04
   std      8.156347e+04
@@ -436,7 +438,7 @@ Shop Dimension
   75%      2.833600e+04
   max      1.702097e+06
 
-  >>> 100.0*x[x == 1].shape[0] / x.shape[0] 
+  >>> 100.0*ids[ids == 1].shape[0] / ids.shape[0] 
   11.19
   </code>
 </pre>
@@ -466,3 +468,243 @@ Shop Dimension
   df['created_at_date'] = df.base_date + days
   </code>
 </pre>
+
+
+## Example job (SQL)
+
+<pre class="stretch"> 
+  <code class="language-sql stretch"> 
+  SELECT
+    sd.shop_country_code,
+    trxns.created_at_date,
+    MAX(amount) AS max_transaction_value
+  FROM
+    transactions AS trxns
+    INNER JOIN shop_dimension AS sd
+      ON trxns.shop_id=sd.shop_id
+  GROUP BY 1,2
+  </code>
+</pre>
+
+
+## Example job (PySpark)
+
+<pre class="stretch"> 
+  <code class="language-python stretch"> 
+  output = (
+      trxns_skewed_df
+      .join(shop_df, on='shop_id')
+      .groupBy('shop_country_code', 'created_at_date')
+      .agg(
+          F.max('amount').alias('max_transaction_value')
+      )
+  )
+
+  result = output.collect()
+  </code>
+</pre>
+
+**Pop quiz:** how many stages will there be?
+
+
+<img src="imgs/in-the-trenches-with-spark/spark-web-ui-3.png">
+
+
+<img src="imgs/in-the-trenches-with-spark/spark-web-ui-4.png">
+
+
+<img src="imgs/in-the-trenches-with-spark/spark-web-ui-5-1.png">
+
+
+<img src="imgs/in-the-trenches-with-spark/spark-web-ui-5-2.png">
+
+
+<img src="imgs/in-the-trenches-with-spark/spark-web-ui-5-3.png">
+
+
+<img src="imgs/in-the-trenches-with-spark/spark-web-ui-6.png">
+
+
+<img class="stretch" src="imgs/in-the-trenches-with-spark/spark-web-ui-7-1.png">
+
+
+### Hover over to see more info
+
+<img class="stretch" src="imgs/in-the-trenches-with-spark/spark-web-ui-7-2.gif">
+
+
+<img src="imgs/in-the-trenches-with-spark/spark-web-ui-8.png">
+
+
+### Inspecting the plan
+
+<img class="stretch" src="imgs/in-the-trenches-with-spark/spark-physical-plan-1.png">
+
+
+### Inspecting the plan
+<li>See how the Spark optimizer has planned to execute your job</li>
+<li>Understand what join strategies are being used</li>
+<ul>
+      <li>did Spark decide to broadcast something?</li>
+</ul>
+<li>See what filters have been pushed down to Parquet (more efficient)</li>
+
+
+
+### Alternatively, you can get the physical plan by calling `.explain()`
+
+```python
+  output = (
+      trxns_skewed_df
+      .join(shop_df, on='shop_id')
+      ...
+  )
+  output.explain()
+```
+
+<img class="stretch" src="imgs/in-the-trenches-with-spark/spark-physical-plan-2.png">
+
+---
+
+## Spark Join Strategies
+
+<img class="stretch" src="imgs/in-the-trenches-with-spark/spark-web-ui-1.png">
+
+
+## Background
+
+* Whenever we join, there is a shuffle
+* Shuffle recap:
+  * Data copied across the network to other executors
+  * Involves data serialization, memorconsumption, network I/O
+  * Shuffle are therefore **complex** & **costly**
+* Most issues I've seen are a result of bad joins
+
+
+## Background (cont'd)
+
+* When you join, all records with the *same joining key* are written to the *same partition*
+* Once this is complete, Spark can issue tasks to work on each parititon and perform the join without having to request data from other partitions
+* All data for a particular join key must fit in a single partition
+  * Max partition size = 2GB
+
+
+### All strategies boil down to one thing..
+
+Stop (or reduce) the shuffle!
+
+<img src="imgs/in-the-trenches-with-spark/shuffle.gif" height="500">
+<img src="imgs/in-the-trenches-with-spark/stop_it.gif" width="300">
+
+
+### Normal Join
+
+<pre class="stretch"> 
+  <code class="language-sql stretch"> 
+  SELECT
+    sd.shop_country_code,
+    trxns.created_at_date,
+    MAX(amount) AS max_transaction_value
+  FROM
+    transactions AS trxns
+    INNER JOIN shop_dimension AS sd
+      ON trxns.shop_id=sd.shop_id
+  GROUP BY 1,2
+  </code>
+</pre>
+
+
+<img class="stretch" src="imgs/in-the-trenches-with-spark/example-3-normal-join.png">
+
+
+<img class="stretch" src="imgs/in-the-trenches-with-spark/example-3-user-graph.png">
+
+
+<img class="stretch" src="imgs/in-the-trenches-with-spark/example-3-normal-join-w-data.png">
+
+
+### Broadcast join
+
+* A copy of the smaller dataset is sent to each executor
+* No shuffle required!
+* Will almost always be the best performing join strategy (if it works)
+
+
+### Broadcast join (cont'd)
+
+* Spark will automatically try and broadcast small datasets
+  * One of the tables must be smaller than 10MB
+    * `spark.sql.autoBroadcastJoinThreshold`
+  * Must take <10 min
+    * `spark.sql.broadcastTimeout`
+  * Disable auto-broadcasting with `spark.sql.autoBroadcastJoinThreshold: -1`
+* Manually mark datasets for broadcasting with `F.broadcast(df)`
+
+
+<img class="stretch" src="imgs/in-the-trenches-with-spark/example-3-broadcast-join.png">
+
+
+<img class="stretch" src="imgs/in-the-trenches-with-spark/example-3-broadcast-join-w-data.png">
+
+
+### Salted Join
+
+* Salting inserts a random element into the partitioning
+* Example with 5 "salt partitions"
+  * Add a random number between 1 and 5 to each row in the large (skewed dataset)
+  * Your largest partition will be divided in 5
+  * Smaller dataset is copied 5 times
+* Join key becomes (original_join_key, salt_key)
+
+
+<img class="stretch" src="imgs/in-the-trenches-with-spark/example-3-salt-join-1.png">
+
+
+<img class="stretch" src="imgs/in-the-trenches-with-spark/example-3-salt-join-2.png">
+
+
+<img class="stretch" src="imgs/in-the-trenches-with-spark/example-3-salt-join-3.png">
+
+
+### Partial Broadcast Join
+
+* Identify high frequency (HF) join keys (i.e. `shop_id`s with the most transactions)
+* Divide datasets into two: one with HF keys and another with all others key
+* Broadcast join for HF datasets
+* Regular join for LF datasets
+
+
+<img class="stretch" src="imgs/in-the-trenches-with-spark/example-3-partial-broadcast-join.png">
+
+
+<img class="stretch" src="imgs/in-the-trenches-with-spark/example-3-partial-broadcast-join-dag.png">
+
+
+### Filter prior to joining
+
+* Shrink your dataset so there is less to shuffle
+* Spark query optimizer will sometimes automatically do this for you
+  * Need to check the physical plan to be sure
+
+
+### Adjust your partioning
+
+* Default number of partitions will be equal to number of files
+* Anytime there is a shuffle (i.e. join), spark will default to 200 partitions
+  * Can control this setting with `spark.sql.shuffle.partitions: 4000`
+
+
+### Adjust your partioning (cont'd)
+* Be careful:
+  * Too few and you lose out on parallelism (executors sit idle) 
+  * Too many may result in task scheduling time > actual execution time
+* Easy rule of thumb: aim for 128MB per partition
+  * `[largest_dataset_size_Mb] / 128Mb`
+  * Grab `largest_dataset_size` from one of the Exchange operations in SQL tab 
+
+
+### Adjust your partioning (cont'd)
+
+*"There is no replacement for simply increasing the number of partitions until performance stops improving.”*
+
+**- Holden Karau - High Performance Spark**
