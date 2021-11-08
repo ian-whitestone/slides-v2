@@ -215,6 +215,7 @@ note: example speakr notes!
       SUM(amount) AS amount_processed
   FROM
       trxns_cl
+  GROUP BY 1
   </code>
 </pre>
 
