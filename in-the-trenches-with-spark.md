@@ -603,14 +603,14 @@ Stop (or reduce) the shuffle!
 <pre class="stretch"> 
   <code class="language-sql stretch"> 
   SELECT
-    sd.shop_country_code,
-    trxns.created_at_date,
-    MAX(amount) AS max_transaction_value
+      transactions.user_id,
+      transactions.amount
+      users.signup_country_code,
+      users.signup_source
   FROM
-    transactions AS trxns
-    INNER JOIN shop_dimension AS sd
-      ON trxns.shop_id=sd.shop_id
-  GROUP BY 1,2
+      transactions
+      INNER JOIN users
+          ON transactions.user_id=users.user_id
   </code>
 </pre>
 
