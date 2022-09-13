@@ -1,105 +1,117 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>Data @ Shopify</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-        <link rel="icon" type="image/x-icon" href="imgs/shopify-favicon.png">
-		<link rel="stylesheet" href="dist/reset.css">
-		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/white.css">
+    <title>Data @ Shopify</title>
 
-		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css">
-    
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-156053338-2"></script>
-        <script type="text/javascript">
-            // Global site tag (gtag.js) - Google Analytics
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-          
-              gtag('config', 'UA-156053338-2');
-          </script>
-        <link rel="stylesheet" href="dist/theme/customizations.css">
+    <link rel="icon" type="image/x-icon" href="imgs/shopify-favicon.png">
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/white.css">
 
-        <!-- Custom Styles For Our Presentation -->
-        <style>
-            .smaller_text {
-                font-size: 30px;
-            }
-        </style>
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
 
-    </head>
-	<body>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-156053338-2"></script>
+    <script type="text/javascript">
+        // Global site tag (gtag.js) - Google Analytics
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-		<div class="reveal">
-			<div class="slides">
+        gtag('config', 'UA-156053338-2');
+    </script>
+    <link rel="stylesheet" href="dist/theme/customizations.css">
 
-                <section 
-                    data-markdown="data-science-at-shopify.md"
-                    data-separator="^---"
-                    data-separator-notes="^note:"
-                    data-separator-vertical="^\n\n">
-                </section>
+    <!-- Google Analytics 4 -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SM6SRP7NQT"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-			</div>
-		</div>
+        gtag('config', 'G-SM6SRP7NQT');
+    </script>
+    <!-- End Google Analytics 4 -->
 
-		<script src="dist/reveal.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
-		<script src="plugin/highlight/highlight.js"></script>
-		<script>
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
-			Reveal.initialize({
-                hash: true,
-                center: false,
+    <!-- Custom Styles For Our Presentation -->
+    <style>
+        .smaller_text {
+            font-size: 30px;
+        }
+    </style>
 
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
-			});
-        </script>
+</head>
+
+<body>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <section data-markdown="data-science-at-shopify.md" data-separator="^---" data-separator-notes="^note:"
+                data-separator-vertical="^\n\n">
+            </section>
+
+        </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+        // More info about initialization & config:
+        // - https://revealjs.com/initialization/
+        // - https://revealjs.com/config/
+        Reveal.initialize({
+            hash: true,
+            center: false,
+
+            // Learn about plugins: https://revealjs.com/plugins/
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
 
 
-        <!-- https://github.com/hakimel/reveal.js/issues/806#issuecomment-222417787-->
+    <!-- https://github.com/hakimel/reveal.js/issues/806#issuecomment-222417787-->
 
-        <style type="text/css">
-            #footer {
-                position: absolute;
-                bottom: 0%;
-                left: 1%;
-            }
-        </style>
+    <style type="text/css">
+        #footer {
+            position: absolute;
+            bottom: 0%;
+            left: 1%;
+        }
+    </style>
 
-        <!-- 2. Create hidden footer <div> -->
-        <div id="hidden" style="display:none;">
-            <div id="header">
-                <div id="footer">
-                    <img src="imgs/shopify-logo-blue.png" height="50px">
-                </div>
+    <!-- 2. Create hidden footer <div> -->
+    <div id="hidden" style="display:none;">
+        <div id="header">
+            <div id="footer">
+                <img src="imgs/shopify-logo-blue.png" height="50px">
             </div>
         </div>
+    </div>
 
-        <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-        <script type="text/javascript">
-            // 3. On Reveal.js ready event, copy header/footer <div> into each `.slide-background` <div>
-            var header = $('#header').html();
-            if ( window.location.search.match( /print-pdf/gi ) ) {
-                Reveal.addEventListener( 'ready', function( event ) {
-                    $('.slide-background').append(header);
-                });
-            }
-            else {
-                $('div.reveal').append(header);
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript">
+        // 3. On Reveal.js ready event, copy header/footer <div> into each `.slide-background` <div>
+        var header = $('#header').html();
+        if (window.location.search.match(/print-pdf/gi)) {
+            Reveal.addEventListener('ready', function (event) {
+                $('.slide-background').append(header);
+            });
         }
-        </script>
+        else {
+            $('div.reveal').append(header);
+        }
+    </script>
 
 
 
-	</body>
+</body>
+
 </html>
