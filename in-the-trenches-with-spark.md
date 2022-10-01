@@ -85,13 +85,13 @@ note: example speakr notes!
 
 ## Architecture overview
 
-<img src="imgs/in-the-trenches-with-spark/cluster-overview-1.png">
+<img loading="lazy" src="imgs/in-the-trenches-with-spark/cluster-overview-1.png">
 
 
-<img class="stretch" src="imgs/in-the-trenches-with-spark/cluster-overview-2.png">
+<img loading="lazy" class="stretch" src="imgs/in-the-trenches-with-spark/cluster-overview-2.png">
 
 
-<img class="stretch" src="imgs/in-the-trenches-with-spark/cluster-overview-3.png">
+<img loading="lazy" class="stretch" src="imgs/in-the-trenches-with-spark/cluster-overview-3.png">
 
 
 # Common terminology
@@ -247,25 +247,25 @@ note: example speakr notes!
 </pre>
 
 
-<img src="imgs/in-the-trenches-with-spark/example-1-full-split.png">
+<img loading="lazy" src="imgs/in-the-trenches-with-spark/example-1-full-split.png">
 
 
-<img src="imgs/in-the-trenches-with-spark/example-1-part-1.png">
+<img loading="lazy" src="imgs/in-the-trenches-with-spark/example-1-part-1.png">
 
 
-<img src="imgs/in-the-trenches-with-spark/example-1-part-1-w-data.png">
+<img loading="lazy" src="imgs/in-the-trenches-with-spark/example-1-part-1-w-data.png">
 
 
-<img src="imgs/in-the-trenches-with-spark/example-1-part-2.png">
+<img loading="lazy" src="imgs/in-the-trenches-with-spark/example-1-part-2.png">
 
 
-<img src="imgs/in-the-trenches-with-spark/example-1-part-2-w-executors.png">
+<img loading="lazy" src="imgs/in-the-trenches-with-spark/example-1-part-2-w-executors.png">
 
 
-<img src="imgs/in-the-trenches-with-spark/example-1-part-2-w-data.png">
+<img loading="lazy" src="imgs/in-the-trenches-with-spark/example-1-part-2-w-data.png">
 
 
-<img src="imgs/in-the-trenches-with-spark/example-1-part-3.png">
+<img loading="lazy" src="imgs/in-the-trenches-with-spark/example-1-part-3.png">
 
 ---
 
@@ -316,10 +316,10 @@ note: example speakr notes!
 </pre>
 
 
-<img class="stretch" src="imgs/in-the-trenches-with-spark/example-2-no-broadcast.png">
+<img loading="lazy" class="stretch" src="imgs/in-the-trenches-with-spark/example-2-no-broadcast.png">
 
 
-<img class="stretch" src="imgs/in-the-trenches-with-spark/example-2-no-broadcast-w-data.png">
+<img loading="lazy" class="stretch" src="imgs/in-the-trenches-with-spark/example-2-no-broadcast-w-data.png">
 
 
 #### Switching to a broadcast join
@@ -340,13 +340,13 @@ note: example speakr notes!
 </pre>
 
 
-<img class="stretch" src="imgs/in-the-trenches-with-spark/example-2-with-broadcast.png">
+<img loading="lazy" class="stretch" src="imgs/in-the-trenches-with-spark/example-2-with-broadcast.png">
 
 ---
 
 # Spark Web UI
 
-<img class="stretch" src="imgs/in-the-trenches-with-spark/spark-web-ui-0.png">
+<img loading="lazy" class="stretch" src="imgs/in-the-trenches-with-spark/spark-web-ui-0.png">
 
 
 ## Sample Data
@@ -424,7 +424,7 @@ Shop Dimension
   </code>
 </pre>
 
-<img class="stretch" src="imgs/in-the-trenches-with-spark/example-trxns-skew.png" >
+<img loading="lazy" class="stretch" src="imgs/in-the-trenches-with-spark/example-trxns-skew.png" >
 
 
 <pre> 
@@ -508,38 +508,38 @@ Shop Dimension
 **Pop quiz:** how many stages will there be?
 
 
-<img src="imgs/in-the-trenches-with-spark/spark-web-ui-3.png">
+<img loading="lazy" src="imgs/in-the-trenches-with-spark/spark-web-ui-3.png">
 
 
-<img src="imgs/in-the-trenches-with-spark/spark-web-ui-4.png">
+<img loading="lazy" src="imgs/in-the-trenches-with-spark/spark-web-ui-4.png">
 
 
-<img src="imgs/in-the-trenches-with-spark/spark-web-ui-5-1.png">
+<img loading="lazy" src="imgs/in-the-trenches-with-spark/spark-web-ui-5-1.png">
 
 
-<img src="imgs/in-the-trenches-with-spark/spark-web-ui-5-2.png">
+<img loading="lazy" src="imgs/in-the-trenches-with-spark/spark-web-ui-5-2.png">
 
 
-<img src="imgs/in-the-trenches-with-spark/spark-web-ui-5-3.png">
+<img loading="lazy" src="imgs/in-the-trenches-with-spark/spark-web-ui-5-3.png">
 
 
-<img src="imgs/in-the-trenches-with-spark/spark-web-ui-6.png">
+<img loading="lazy" src="imgs/in-the-trenches-with-spark/spark-web-ui-6.png">
 
 
-<img class="stretch" src="imgs/in-the-trenches-with-spark/spark-web-ui-7-1.png">
+<img loading="lazy" class="stretch" src="imgs/in-the-trenches-with-spark/spark-web-ui-7-1.png">
 
 
 ### Hover over to see more info
 
-<img class="stretch" src="imgs/in-the-trenches-with-spark/spark-web-ui-7-2.gif">
+<img loading="lazy" class="stretch" src="imgs/in-the-trenches-with-spark/spark-web-ui-7-2.gif">
 
 
-<img src="imgs/in-the-trenches-with-spark/spark-web-ui-8.png">
+<img loading="lazy" src="imgs/in-the-trenches-with-spark/spark-web-ui-8.png">
 
 
 ### Inspecting the plan
 
-<img class="stretch" src="imgs/in-the-trenches-with-spark/spark-physical-plan-1.png">
+<img loading="lazy" class="stretch" src="imgs/in-the-trenches-with-spark/spark-physical-plan-1.png">
 
 
 ### Inspecting the plan
@@ -563,13 +563,13 @@ Shop Dimension
   output.explain()
 ```
 
-<img class="stretch" src="imgs/in-the-trenches-with-spark/spark-physical-plan-2.png">
+<img loading="lazy" class="stretch" src="imgs/in-the-trenches-with-spark/spark-physical-plan-2.png">
 
 ---
 
 ## Spark Join Strategies
 
-<img class="stretch" src="imgs/in-the-trenches-with-spark/spark-web-ui-1.png">
+<img loading="lazy" class="stretch" src="imgs/in-the-trenches-with-spark/spark-web-ui-1.png">
 
 
 ## Background
@@ -594,8 +594,8 @@ Shop Dimension
 
 Stop (or reduce) the shuffle!
 
-<img src="imgs/in-the-trenches-with-spark/shuffle.gif" height="500">
-<img src="imgs/in-the-trenches-with-spark/stop_it.gif" width="300">
+<img loading="lazy" src="imgs/in-the-trenches-with-spark/shuffle.gif" height="500">
+<img loading="lazy" src="imgs/in-the-trenches-with-spark/stop_it.gif" width="300">
 
 
 ### Normal Join
@@ -615,13 +615,13 @@ Stop (or reduce) the shuffle!
 </pre>
 
 
-<img class="stretch" src="imgs/in-the-trenches-with-spark/example-3-normal-join.png">
+<img loading="lazy" class="stretch" src="imgs/in-the-trenches-with-spark/example-3-normal-join.png">
 
 
-<img class="stretch" src="imgs/in-the-trenches-with-spark/example-3-user-graph.png">
+<img loading="lazy" class="stretch" src="imgs/in-the-trenches-with-spark/example-3-user-graph.png">
 
 
-<img class="stretch" src="imgs/in-the-trenches-with-spark/example-3-normal-join-w-data.png">
+<img loading="lazy" class="stretch" src="imgs/in-the-trenches-with-spark/example-3-normal-join-w-data.png">
 
 
 ### Broadcast join
@@ -642,10 +642,10 @@ Stop (or reduce) the shuffle!
 * Manually mark datasets for broadcasting with `F.broadcast(df)`
 
 
-<img class="stretch" src="imgs/in-the-trenches-with-spark/example-3-broadcast-join.png">
+<img loading="lazy" class="stretch" src="imgs/in-the-trenches-with-spark/example-3-broadcast-join.png">
 
 
-<img class="stretch" src="imgs/in-the-trenches-with-spark/example-3-broadcast-join-w-data.png">
+<img loading="lazy" class="stretch" src="imgs/in-the-trenches-with-spark/example-3-broadcast-join-w-data.png">
 
 
 ### Salted Join
@@ -658,13 +658,13 @@ Stop (or reduce) the shuffle!
 * Join key becomes (original_join_key, salt_key)
 
 
-<img class="stretch" src="imgs/in-the-trenches-with-spark/example-3-salt-join-1.png">
+<img loading="lazy" class="stretch" src="imgs/in-the-trenches-with-spark/example-3-salt-join-1.png">
 
 
-<img class="stretch" src="imgs/in-the-trenches-with-spark/example-3-salt-join-2.png">
+<img loading="lazy" class="stretch" src="imgs/in-the-trenches-with-spark/example-3-salt-join-2.png">
 
 
-<img class="stretch" src="imgs/in-the-trenches-with-spark/example-3-salt-join-3.png">
+<img loading="lazy" class="stretch" src="imgs/in-the-trenches-with-spark/example-3-salt-join-3.png">
 
 
 ### Partial Broadcast Join
@@ -675,10 +675,10 @@ Stop (or reduce) the shuffle!
 * Regular join for LF datasets
 
 
-<img class="stretch" src="imgs/in-the-trenches-with-spark/example-3-partial-broadcast-join.png">
+<img loading="lazy" class="stretch" src="imgs/in-the-trenches-with-spark/example-3-partial-broadcast-join.png">
 
 
-<img class="stretch" src="imgs/in-the-trenches-with-spark/example-3-partial-broadcast-join-dag.png">
+<img loading="lazy" class="stretch" src="imgs/in-the-trenches-with-spark/example-3-partial-broadcast-join-dag.png">
 
 
 ### Filter prior to joining
